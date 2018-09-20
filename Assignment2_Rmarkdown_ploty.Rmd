@@ -1,0 +1,32 @@
+---
+title: "Fuel economy of cars"
+author: "Mark St. John"
+date: '2018-09-20'
+output: ioslides_presentation
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(echo = FALSE)
+data("mtcars")
+library(ggplot2)
+library(plotly)
+```
+
+## Factors affecting fuel economy
+
+Fuel economy is dependent on many interacting variables.
+
+```{r plotly, message=F, warning=F}
+mtcars$cly <- as.factor(mtcars$cyl)
+p3 <- plot_ly(mtcars, x = ~disp, y = ~mpg, color = ~cly, size = ~wt)  %>% 
+    add_lines(y = ~fitted(loess(mpg ~ disp)), showlegend = T) %>% 
+    add_markers(x = ~disp, y = ~mpg, text = paste0("Weight: ", mtcars$wt, " tons"), showlegend = FALSE) %>%
+    layout(xaxis = list(title = 'Displacement in cubic inches'),
+         yaxis = list(title = 'Miles per gallon'),
+         legend = list(title = "Cylinders", x = 0.80, y = 0.90))
+p3
+```
+
+## Conclusions
+
+I want an electric car!
